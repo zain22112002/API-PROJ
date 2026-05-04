@@ -1,36 +1,49 @@
 import requests
 url="https://jsonplaceholder.typicode.com/posts"
+def get():
+    
+    response=requests.get(url)
+    print(response.status_code)
+def creat():
+    
+    data={
+        "titl":"Zain Project",
+        "body":"API test",
+        "userId":1
+    }
+    response=requests.post(url,json=data)
+    print(response.status_code)
+    print(response.text)
 
-response=requests.get(url)
-print(response.status_code)
 
-data={
-    "titl":"Zain Project",
-    "body":"API test",
-    "userId":1
+def update():
+    response = requests.put(url + "/1",json={
+            "title": "updated proj",
+            "body": "Tset 2",
+            "userId": 2
+        }
+    )
 
-}
-response=requests.post(url,json=data)
-print(response.status_code)
-print(response.json())
+    print("request-status:", response.status_code)
+    print(response.json())
 
+def delete():
+    response = requests.delete(url + "/1")
+    print("request-status:", response.status_code)
+    print("Deleted")
 
-response = requests.put("https://jsonplaceholder.typicode.com/posts/1", json={
+def patch ():
+    data = {
+        "title": "First project"
+    }
 
-    "title": "updated-first-post",
-    "body": "new text",
-    "userId": 2
-}
-)
-print(response.status_code)
-print(response.json())
+    response = requests.patch(url + "/1", json=data)
+    print("request-status:", response.status_code)
+    print(response.json())
 
-response = requests.delete("https://jsonplaceholder.typicode.com/posts/1")
-print(response.status_code)
-print("Deleted")
+get()
+creat()
+update()
+delete()
+patch()    
 
-data={"title":"First project"}
-response=requests.patch(url="https://jsonplaceholder.typicode.com/posts/1",json=data)
-print(response.status_code)
-print(response.json())
-print("Updated")
