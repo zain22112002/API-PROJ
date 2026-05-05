@@ -1,49 +1,71 @@
 import requests
-url="https://jsonplaceholder.typicode.com/posts"
-def get():
-    
-    response=requests.get(url)
-    print(response.status_code)
-def creat():
-    
-    data={
-        "titl":"Zain Project",
-        "body":"API test",
-        "userId":1
-    }
-    response=requests.post(url,json=data)
-    print(response.status_code)
-    print(response.json())
+url = "https://jsonplaceholder.typicode.com/posts"
 
+def api_get():
+    try:
+        response = requests.get(url)
+        print("Status:", response.status_code)
+        print(response.json())
+    except Exception as e:
+        print("Error:", e)
+
+def create():
+    try:
+        data = {
+            "title": "Zain Project",
+            "body": "API test",
+            "userId": 1
+        }
+        response = requests.post(url, json=data)
+        print("Status:", response.status_code)
+        print(response.json())
+
+    except Exception as e:
+        print("Error:", e)
 
 def update():
-    response = requests.put(url + "/1",json={
+    try:
+        response = requests.put(url + "/1", json={
             "title": "updated proj",
-            "body": "Tset 2",
+            "body": "Test",  
             "userId": 2
-        }
-    )
+        })
 
-    print("request-status:", response.status_code)
-    print(response.json())
+        print("Status:", response.status_code)
+        print(response.json())
+
+    except Exception as e:
+        print("Error:", e)
 
 def delete():
-    response = requests.delete(url + "/1")
-    print("request-status:", response.status_code)
-    print("Deleted")
+    try:
+        response = requests.delete(url + "/1")
+        print("Status:", response.status_code)
 
-def patch ():
-    data = {
-        "title": "First project"
-    }
+        if response.status_code == 200:
+            print("Deleted")
+        else:
+            print("Delete failed")
 
-    response = requests.patch(url + "/1", json=data)
-    print("request-status:", response.status_code)
-    print(response.json())
+    except Exception as e:
+        print("Error:", e)
 
-get()
-creat()
+def patch():
+    try:
+        data = {
+            "title": "First project"
+        }
+
+        response = requests.patch(url + "/1", json=data)
+        print("Status:", response.status_code)
+        print(response.json())
+
+    except Exception as e:
+        print("Error:", e)
+
+
+api_get()
+create()
 update()
 delete()
-patch()    
-
+patch()
